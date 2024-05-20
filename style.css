@@ -1,0 +1,64 @@
+/*Color scheme
+Black: #040404
+Blue Ribbon: #0443F2
+Malibu: #53CBFB
+Alto: #CFCFCF
+*/
+:root{
+    --black: #040404;
+    --blue-ribbon: #0443F2;
+    --malibu: #53CBFB;
+    --alto: #CFCFCF;
+}
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--alto);
+}
+form{
+    text-align: center;
+}
+.titleInput{
+    padding: 10px;
+    border: 2px solid var(--black);
+    border-radius: 10px;
+    margin-top: 10px;
+    width: 300px;
+}
+button[type=submit]{
+    padding: 10px 20px;
+    border: 2px solid var(--black);
+    border-radius: 10px;
+    background-color: var(--malibu);
+    cursor: pointer;
+}
+.result{
+    margin: 20px;
+    background-color: var(--malibu);
+    border: 2px solid var(--black);
+    border-radius: 30px;
+    text-align: center;
+}
+.titleDisplay{
+    text-decoration: underline var(--blue-ribbon);
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 15px;
+}
+.posterDisplay{
+    width: 200px;
+    height: auto;
+}
+.yearDisplay, .ratedDisplay, .releasedDisplay, .runtimeDisplay, .genreDisplay{
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.directorDisplay, .writerDisplay, .actorDisplay{
+    font-weight: medium;
+    margin-bottom: 10px;
+}
+.plotDisplay{
+    padding: 10px;
+    font-style: italic;
+    font-size: 0.9rem;
+}
