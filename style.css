@@ -62,3 +62,7 @@ button[type=submit]{
     font-style: italic;
     font-size: 0.9rem;
 }
+.errorDisplay{
+    font-size: 2rem;
+    font-weight: bold;
+}
