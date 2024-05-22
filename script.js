@@ -1,31 +1,50 @@
 const movieSearch = document.querySelector(".movieSearch");
 const titleInput = document.querySelector(".titleInput");
+const yearInput = document.querySelector(".yearInput");
 const result = document.querySelector(".result");
 const api_key = config.MY_KEY;
 
 movieSearch.addEventListener("submit", async event => {
     event.preventDefault(); //prevents form refreshing page
     const movie = titleInput.value;
-    console.log(`Movie: ${movie}`);
-    if(movie){//if a title is in the text field, search for the title
-        try{
-            const movieData = await getMovieData(movie);//search movie title
-            displayMovieInfo(movieData);//show movie info on page
-        }catch(error){
-            console.error(error);
-            displayError(error);
-        }
-    }else{
+    const year = yearInput.value;
+    if(!movie){//if there is no title in the field
         displayError("Please enter a title");
+    }else{//if a title is in the field
+        if(year){//if a year is in the field
+            if(year.length !== 4){//invalid year
+                displayError("Please enter a valid year");
+            }else{//search with valid title and year
+                try{
+                    const movieData = await getMovieData(movie, year);//search movie title
+                    displayMovieInfo(movieData);//show movie info on page
+                }catch(error){
+                    console.error(error);
+                    displayError(error);
+                }
+            }
+        }else{//search with valid title, no year
+            try{
+                const movieData = await getMovieData(movie, '');//search movie title
+                displayMovieInfo(movieData);//show movie info on page
+            }catch(error){
+                console.error(error);
+                displayError(error);
+            }
+        }
     }
 });
 
-async function getMovieData(movie){
-    const apiUrl = `https://www.omdbapi.com/?apikey=${api_key}&t=${movie}&plot=full`;
+async function getMovieData(movie, year){
+    console.log(`Fetching data for ${movie}...`);
+    let apiUrl = `https://www.omdbapi.com/?apikey=${api_key}&t=${movie}&plot=full`;
+    if(year !== ""){//if there is a year in the search
+        apiUrl = `https://www.omdbapi.com/?apikey=${api_key}&t=${movie}&y=${year}&plot=full`;
+    }
     const response = await fetch(apiUrl);
     console.log(response);
     if(!response.ok){
-        throw new Error("Could not fetch data for this title");
+        throw new Error("Could not fetch data for this title.");
     }
     return await response.json();
 }
@@ -33,7 +52,7 @@ async function getMovieData(movie){
 function displayMovieInfo(data){
     console.log(data);
     if(data.Response === 'False'){
-        displayError("Oops. This doesn't seem to exist.");
+        displayError(`Oops. This doesn't seem to exist. Either: 1) ensure the movie title is spelled correctly, 2) ensure the year is correct, 3) exclude the year from the search`);
     }else{
         const {Title: movie,
             Year: year,
@@ -104,7 +123,6 @@ function displayMovieInfo(data){
         result.appendChild(actorDisplay);
         result.appendChild(plotDisplay);
     }
-    
 }
 
 function convertReleaseDate(date){
@@ -113,7 +131,6 @@ function convertReleaseDate(date){
     if(day.startsWith("0")){
         day = day.charAt(1);
     }
-
     //convert month
     let month = date.slice(3, 6);
     let longMonth = "";
@@ -157,7 +174,6 @@ function convertReleaseDate(date){
         default:
             console.log(`${month} is not a month`);
     }
-
     //convert year
     let year = date.slice(7, 11);
     let newDate = "";
@@ -181,8 +197,6 @@ function convertRuntime(time){
         hour+= 1;
         min = 0;
     }
-    console.log(`hour: ${hour}`);
-    console.log(`minute: ${min}`);
     //singular or plural
     let hourText = "";
     let minuteText = "";
@@ -193,8 +207,6 @@ function convertRuntime(time){
     }else{
         hourText = `${hour} hrs`;
     }
-    console.log(`hourText = ${hourText}`);
-
     if(min === 0){
         minuteText = ``;
     }else if(min === 1){
@@ -202,11 +214,10 @@ function convertRuntime(time){
     }else{
         minuteText = `${min} mins`;
     }
-    console.log(`minuteText = ${minuteText}`);
-
-    if(hourText == ""){
+    //return based on hours and minutes
+    if(hourText === ""){
         return `${minuteText}`;
-    }else if(minuteText == ""){
+    }else if(minuteText === ""){
         return `${hourText}`;
     }
     return `${hourText} ${minuteText}`;

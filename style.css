@@ -21,13 +21,26 @@ form{
     padding: 10px;
     border: 2px solid var(--black);
     border-radius: 10px;
+    box-shadow: 2px 2px 5px var(--black);
     margin-top: 10px;
     width: 300px;
+}
+.yearInput{
+    padding: 10px;
+    border: 2px solid var(--black);
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px var(--black);
+    margin: 5px;
+    width: 75px;
+}
+.titleInput::placeholder{
+    color: var(--blue-ribbon);
 }
 button[type=submit]{
     padding: 10px 20px;
     border: 2px solid var(--black);
     border-radius: 10px;
+    box-shadow: 2px 2px 5px var(--black);
     background-color: var(--malibu);
     cursor: pointer;
 }
