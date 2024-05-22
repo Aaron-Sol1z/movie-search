@@ -2,7 +2,7 @@ const movieSearch = document.querySelector(".movieSearch");
 const titleInput = document.querySelector(".titleInput");
 const yearInput = document.querySelector(".yearInput");
 const result = document.querySelector(".result");
-const api_key = config.MY_KEY;
+const api_key = '5f789448';
 
 movieSearch.addEventListener("submit", async event => {
     event.preventDefault(); //prevents form refreshing page
