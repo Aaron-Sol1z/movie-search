@@ -5,14 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Search</title>
     <link rel="stylesheet" href="./style.css">
+    <script src="https://kit.fontawesome.com/cdf4549b51.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <form class="movieSearch">
-        <input type="text" class="titleInput" placeholder="Enter movie title: ">
-        <input type="text" class="yearInput" placeholder="Enter year: ">
-        <button type="submit">Get Movie</button>
-    </form>
-    <div class="result" style="display: none"></div>
+    <header>
+        <div class="header-content">
+            <h1>Aaron Soliz</h1>
+        <h3>Movie Search</h3>
+        <p>
+            This application allows you to search for movies and series'.
+            Each search result will display information about the movie or series, including the runtime, genre, plot summary, and other details.
+            This was made to help users find information on a movie or series in a clean and concise section.
+        </p>
+        <p>
+            Simply enter the title that you want to find information on and hit the 'Get Title' button.
+            You can also include a year to narrow down your search.
+        </p>
+        </div>
+    </header>
+    <main>
+        <form class="movieSearch">
+            <input type="text" class="titleInput" placeholder="Enter movie title: ">
+            <input type="text" class="yearInput" placeholder="Enter year: ">
+            <button type="submit">Get Title</button>
+        </form>
+        <div class="result" style="display: none"></div>
+    </main>
+    <footer>
+        <div class="contact">
+            <p id="contact-header"><i class="fa-solid fa-envelope"></i> Email</p>
+            <p>Reach out or just say hello with an email to aaronsoliz99@gmail.com</p>
+            <a href="https://www.linkedin.com/in/aaron-soliz-b78841290/"><p id="contact-header"><i class="fa-brands fa-linkedin"></i> LinkedIn</p></a>
+            <p>Check out my profile on LinkedIn</p>
+            <a href="https://github.com/Aaron-Sol1z"><p id="contact-header"><i class="fa-brands fa-github"></i> GitHub</p></a>
+            <p>Check out my other projects on GitHub</p>
+        </div>
+        <p>&copy; <script>document.write(new Date().getFullYear())</script> Aaron Soliz</p>
+        <p>Made with
+            <i class="fa-brands fa-html5"></i> HTML5,
+            <i class="fa-brands fa-css3-alt"></i> CSS,
+            <i class="fa-brands fa-js"></i> JavaScript
+        </p>
+        <p>Powered by <a href="https://www.omdbapi.com/">OMDb API</a></p>
+    </footer>
     <script src="./config.js"></script>
     <script src="./script.js"></script>
 </body>
