@@ -64,11 +64,21 @@ function displayMovieInfo(data){
         titleDisplay.textContent = `${movie} (${year})`;
         posterDisplay.src = `${poster}`;
         ratedDisplay.textContent = `Rated ${rated}`;
-        releasedDisplay.textContent = `Release date: ${released}`;
-        runtimeDisplay.textContent = `Runtime: ${runtime}`;
+        const formattedDate = convertReleaseDate(released);
+        releasedDisplay.textContent = `Release date: ${formattedDate}`;
+        const formattedTime = convertRuntime(runtime);
+        runtimeDisplay.textContent = `Runtime: ${formattedTime}`;
         genreDisplay.textContent = `Genre: ${genre}`;
-        directorDisplay.textContent = `Directors: ${director}`;
-        writerDisplay.textContent = `Writers: ${writer}`;
+        if(director.includes(",")){//singular or plural
+            directorDisplay.textContent = `Directors: ${director}`;
+        }else{
+            directorDisplay.textContent = `Director: ${director}`;
+        }
+        if(writer.includes(",")){//singular or plural
+            writerDisplay.textContent = `Writers: ${writer}`;
+        }else{
+            writerDisplay.textContent = `Writer: ${writer}`;
+        }
         actorDisplay.textContent = `Starring: ${actors}`;
         plotDisplay.textContent = `Plot: ${plot}`;
         //add style classes to elements
@@ -95,6 +105,111 @@ function displayMovieInfo(data){
         result.appendChild(plotDisplay);
     }
     
+}
+
+function convertReleaseDate(date){
+    //convert day
+    let day = date.slice(0, 2);
+    if(day.startsWith("0")){
+        day = day.charAt(1);
+    }
+
+    //convert month
+    let month = date.slice(3, 6);
+    let longMonth = "";
+    switch(month){
+        case "Jan":
+            longMonth = "January";
+            break;
+        case "Feb":
+            longMonth = "February";
+            break;
+        case "Mar":
+            longMonth = "March";
+            break;
+        case "Apr":
+            longMonth = "April";
+            break;
+        case "May":
+            longMonth = "May";
+            break;
+        case "Jun":
+            longMonth = "June";
+            break;
+        case "Jul":
+            longMonth = "July";
+            break;
+        case "Aug":
+            longMonth = "August";
+            break;
+        case "Sep":
+            longMonth = "September";
+            break;
+        case "Oct":
+            longMonth = "October";
+            break;
+        case "Nov":
+            longMonth = "November";
+            break;
+        case "Dec":
+            longMonth = "December";
+            break;
+        default:
+            console.log(`${month} is not a month`);
+    }
+
+    //convert year
+    let year = date.slice(7, 11);
+    let newDate = "";
+    return newDate.concat(longMonth, " ", day, ", ", year);
+}
+
+function convertRuntime(time){
+    let temp = Number(time.slice(0, time.indexOf(" ")));//from start to first space
+    let hour = 0;
+    let min = 0;
+    while(temp != 0){
+        if(!(temp - 60 <= 0)){//if time - 60 minutes isn't 0
+            hour+= 1;
+            temp-= 60;
+        }else{//when no more hours
+            min = temp;
+            temp = 0;
+        }
+    }
+    if(min === 60){//convert 60 minutes to 1 hour
+        hour+= 1;
+        min = 0;
+    }
+    console.log(`hour: ${hour}`);
+    console.log(`minute: ${min}`);
+    //singular or plural
+    let hourText = "";
+    let minuteText = "";
+    if(hour === 0){
+        hourText = ``;
+    }else if(hour === 1){
+        hourText = `${hour} hr`;
+    }else{
+        hourText = `${hour} hrs`;
+    }
+    console.log(`hourText = ${hourText}`);
+
+    if(min === 0){
+        minuteText = ``;
+    }else if(min === 1){
+        minuteText = `${min} min`;
+    }else{
+        minuteText = `${min} mins`;
+    }
+    console.log(`minuteText = ${minuteText}`);
+
+    if(hourText == ""){
+        return `${minuteText}`;
+    }else if(minuteText == ""){
+        return `${hourText}`;
+    }
+    return `${hourText} ${minuteText}`;
 }
 
 function displayError(message){
