@@ -61,7 +61,7 @@ button[type=submit]{
     width: 200px;
     height: auto;
 }
-.yearDisplay, .ratedDisplay, .releasedDisplay, .runtimeDisplay, .genreDisplay{
+.yearDisplay, .ratedDisplay, .releasedDisplay, .runtimeDisplay, .seasonsDisplay, .genreDisplay{
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 10px;

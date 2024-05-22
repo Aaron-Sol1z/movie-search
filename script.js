@@ -54,7 +54,7 @@ function displayMovieInfo(data){
     if(data.Response === 'False'){
         displayError(`Oops. This doesn't seem to exist. Either: 1) ensure the movie title is spelled correctly, 2) ensure the year is correct, 3) exclude the year from the search`);
     }else{
-        const {Title: movie,
+        const {Title: title,
             Year: year,
             Poster: poster,
             Rated: rated,
@@ -64,63 +64,88 @@ function displayMovieInfo(data){
             Director: director,
             Writer: writer,
             Actors: actors,
-            Plot: plot
+            Plot: plot,
+            Type: type,
+            totalSeasons: seasons
         } = data;
         result.textContent = ""; //reset text if any exists
         result.style.display = "block";
-        //create elements
+        //title and year
         const titleDisplay = document.createElement("h1");
-        const posterDisplay = document.createElement("img");
-        const ratedDisplay = document.createElement("p");
-        const releasedDisplay = document.createElement("p");
-        const runtimeDisplay = document.createElement("p");
-        const genreDisplay = document.createElement("p");
-        const directorDisplay = document.createElement("p");
-        const writerDisplay = document.createElement("p");
-        const actorDisplay = document.createElement("p");
-        const plotDisplay = document.createElement("p");
-        //add content to elements
-        titleDisplay.textContent = `${movie} (${year})`;
-        posterDisplay.src = `${poster}`;
-        ratedDisplay.textContent = `Rated ${rated}`;
-        const formattedDate = convertReleaseDate(released);
-        releasedDisplay.textContent = `Release date: ${formattedDate}`;
-        const formattedTime = convertRuntime(runtime);
-        runtimeDisplay.textContent = `Runtime: ${formattedTime}`;
-        genreDisplay.textContent = `Genre: ${genre}`;
-        if(director.includes(",")){//singular or plural
-            directorDisplay.textContent = `Directors: ${director}`;
-        }else{
-            directorDisplay.textContent = `Director: ${director}`;
-        }
-        if(writer.includes(",")){//singular or plural
-            writerDisplay.textContent = `Writers: ${writer}`;
-        }else{
-            writerDisplay.textContent = `Writer: ${writer}`;
-        }
-        actorDisplay.textContent = `Starring: ${actors}`;
-        plotDisplay.textContent = `Plot: ${plot}`;
-        //add style classes to elements
+        titleDisplay.textContent = `${title} (${year})`;
         titleDisplay.classList.add("titleDisplay");
-        posterDisplay.classList.add("posterDisplay");
-        ratedDisplay.classList.add("ratedDisplay");
-        releasedDisplay.classList.add("releasedDisplay");
-        runtimeDisplay.classList.add("runtimeDisplay");
-        genreDisplay.classList.add("genreDisplay");
-        directorDisplay.classList.add("directorDisplay");
-        writerDisplay.classList.add("writerDisplay");
-        actorDisplay.classList.add("actorDisplay");
-        plotDisplay.classList.add("plotDisplay");
-        //append element to page
         result.appendChild(titleDisplay);
+        //poster
+        const posterDisplay = document.createElement("img");
+        posterDisplay.src = `${poster}`;
+        posterDisplay.classList.add("posterDisplay");
         result.appendChild(posterDisplay);
+        //rating
+        const ratedDisplay = document.createElement("p");
+        ratedDisplay.textContent = `Rated ${rated}`;
+        ratedDisplay.classList.add("ratedDisplay");
         result.appendChild(ratedDisplay);
+        //released
+        const releasedDisplay = document.createElement("p");
+        const formattedDate = convertReleaseDate(released);
+        if(type === "movie"){//release date (movie)
+            releasedDisplay.textContent = `Release date: ${formattedDate}`;
+        }else if(type === "series"){//premiere date (series)
+            releasedDisplay.textContent = `Premiere date: ${formattedDate}`;
+        }
+        releasedDisplay.classList.add("releasedDisplay");
         result.appendChild(releasedDisplay);
-        result.appendChild(runtimeDisplay);
+        //runtime
+        if(type === "movie"){
+            const runtimeDisplay = document.createElement("p");
+            const formattedTime = convertRuntime(runtime);
+            runtimeDisplay.textContent = `Runtime: ${formattedTime}`;
+            runtimeDisplay.classList.add("runtimeDisplay");
+            result.appendChild(runtimeDisplay);
+        }
+        //total seasons
+        if(type === "series"){
+            const seasonsDisplay = document.createElement("p");
+            seasonsDisplay.textContent = `Total Seasons: ${seasons}`;
+            seasonsDisplay.classList.add("seasonsDisplay");
+            result.appendChild(seasonsDisplay);
+        }
+        //genre
+        const genreDisplay = document.createElement("p");
+        genreDisplay.textContent = `Genre: ${genre}`;
+        genreDisplay.classList.add("genreDisplay");
         result.appendChild(genreDisplay);
-        result.appendChild(directorDisplay);
-        result.appendChild(writerDisplay);
+        //director
+        if(director !== "N/A"){
+            const directorDisplay = document.createElement("p");
+            if(director.includes(",")){//singular or plural
+                directorDisplay.textContent = `Directors: ${director}`;
+            }else{
+                directorDisplay.textContent = `Director: ${director}`;
+            }
+            directorDisplay.classList.add("directorDisplay");
+            result.appendChild(directorDisplay);
+        }
+        //writer
+        if(writer !== "N/A"){
+            const writerDisplay = document.createElement("p");
+            if(writer.includes(",")){//singular or plural
+                writerDisplay.textContent = `Writers: ${writer}`;
+            }else{
+                writerDisplay.textContent = `Writer: ${writer}`;
+            }
+            writerDisplay.classList.add("writerDisplay");
+            result.appendChild(writerDisplay);
+        }
+        //actors
+        const actorDisplay = document.createElement("p");
+        actorDisplay.textContent = `Starring: ${actors}`;
+        actorDisplay.classList.add("actorDisplay");
         result.appendChild(actorDisplay);
+        //plot
+        const plotDisplay = document.createElement("p");
+        plotDisplay.textContent = `Plot: ${plot}`;
+        plotDisplay.classList.add("plotDisplay");
         result.appendChild(plotDisplay);
     }
 }
