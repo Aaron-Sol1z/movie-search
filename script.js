@@ -2,7 +2,6 @@ const movieSearch = document.querySelector(".movieSearch");
 const titleInput = document.querySelector(".titleInput");
 const yearInput = document.querySelector(".yearInput");
 const result = document.querySelector(".result");
-const api_key = config.MY_KEY;
 
 movieSearch.addEventListener("submit", async event => {
     event.preventDefault(); //prevents form refreshing page
@@ -37,9 +36,9 @@ movieSearch.addEventListener("submit", async event => {
 
 async function getMovieData(movie, year){
     console.log(`Fetching data for ${movie}...`);
-    let apiUrl = `https://www.omdbapi.com/?apikey=${api_key}&t=${movie}&plot=full`;
+    let apiUrl = `https://www.omdbapi.com/?apikey=5f789448&t=${movie}&plot=full`;
     if(year !== ""){//if there is a year in the search
-        apiUrl = `https://www.omdbapi.com/?apikey=${api_key}&t=${movie}&y=${year}&plot=full`;
+        apiUrl = `https://www.omdbapi.com/?apikey=5f789448&t=${movie}&y=${year}&plot=full`;
     }
     const response = await fetch(apiUrl);
     console.log(response);
